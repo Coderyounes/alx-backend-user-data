@@ -29,6 +29,19 @@ class RedactingFormatter(logging.Formatter):
         return filter_datum(self.fields, self.REDACTION, msg, self.SEPARATOR)
 
 
+PII_FIELDS = ("name", "email", "phone", "ssn", "password")
+
+
+def get_logger():
+    logger = logging.getLogger("user_data")
+    logging.basicConfig(level=logging.INFO)
+    stream_handler = RedactingFormatter(PII_FIELDS) # TODO: (issue) the type need to be List not Tuple
+    logging.StreamHandler()
+    # TODO: adjust loging level to INFO
+    # TODO: logger should have StreamHandler with Redacting Formatter class as formatter
+    return logger
+
+
 def filter_datum(fields: List[str],
                  redaction: str, message: str, separator: str) -> str:
     """
