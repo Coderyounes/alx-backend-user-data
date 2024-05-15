@@ -6,10 +6,10 @@ import re
 
 def filter_datum(fields: List[str], redaction: str, message: str, separator: str) -> str:
     """
-    :param fields:
-    :param redaction:
-    :param message:
-    :param separator:
+    :param fields: List of sensitive parameter
+    :param redaction: redaction word
+    :param message: whole message
+    :param separator: separator to handle with
     :return: redacted message
     """
     for field in fields:
