@@ -4,6 +4,8 @@ from typing import List
 import re
 import logging
 
+import mysql.connector.connection
+
 
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class
@@ -27,6 +29,14 @@ class RedactingFormatter(logging.Formatter):
         """
         msg = super(RedactingFormatter, self).format(record)
         return filter_datum(self.fields, self.REDACTION, msg, self.SEPARATOR)
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    # TODO: Create a Database Connection
+    # TODO: use the ENV variables to Connect to db(username, password, dbname)
+    # PS: use os module to obtain credentials from ENV
+    # PS: use 'mysql-connector-python' if needed
+    pass
 
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
