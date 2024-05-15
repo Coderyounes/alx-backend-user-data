@@ -35,7 +35,7 @@ PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 def get_logger():
     logger = logging.getLogger("user_data")
     logging.basicConfig(level=logging.INFO)
-    stream_handler = RedactingFormatter(PII_FIELDS) # TODO: (issue) the type need to be List not Tuple
+    stream_handler = RedactingFormatter(list(PII_FIELDS))
     logging.StreamHandler()
     # TODO: adjust loging level to INFO
     # TODO: logger should have StreamHandler with Redacting Formatter class as formatter
