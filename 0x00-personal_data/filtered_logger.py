@@ -32,13 +32,17 @@ class RedactingFormatter(logging.Formatter):
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
 
-def get_logger():
+def get_logger() -> logging.Logger:
+    """
+    Create a logger INFO level
+    with RedactingFormatter Class format
+    :return: logger
+    """
     logger = logging.getLogger("user_data")
-    logging.basicConfig(level=logging.INFO)
-    stream_handler = RedactingFormatter(list(PII_FIELDS))
-    logging.StreamHandler()
-    # TODO: adjust loging level to INFO
-    # TODO: logger should have StreamHandler with Redacting Formatter class as formatter
+    logger.setLevel(logging.INFO)
+    stream_handler = logging.StreamHandler()
+    stream_handler.setFormatter(RedactingFormatter(list(PII_FIELDS)))
+    logger.addHandler(stream_handler)
     return logger
 
 
