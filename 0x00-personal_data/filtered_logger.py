@@ -4,7 +4,7 @@ from typing import List
 import re
 import logging
 import mysql.connector.connection
-import os
+from os import environ
 
 
 class RedactingFormatter(logging.Formatter):
@@ -36,13 +36,16 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     :Logic: create a database connection
     :return: a database Connection
     """
-    mydb = mysql.connector.connect(
-        host=os.getenv('PERSONAL_DATA_DB_HOST', 'localhost'),
-        user=os.getenv('PERSONAL_DATA_DB_USERNAME', 'root'),
-        password=os.getenv('PERSONAL_DATA_DB_PASSWORD', ''),
-        database=os.getenv('PERSONAL_DATA_DB_NAME')
+    host = environ.get('PERSONAL_DATA_DB_HOST', 'localhost'),
+    user = environ.get('PERSONAL_DATA_DB_USERNAME', 'root'),
+    password = environ.get('PERSONAL_DATA_DB_PASSWORD', ''),
+    database = environ.get('PERSONAL_DATA_DB_NAME')
+    return mysql.connector.connection.MySQLConnection(
+        user=user,
+        password=password,
+        host=host,
+        database=database
     )
-    return mydb
 
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
