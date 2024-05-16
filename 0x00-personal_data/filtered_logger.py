@@ -6,6 +6,9 @@ import logging
 import mysql.connector.connection
 import os
 
+from mysql.connector.abstracts import MySQLConnectionAbstract
+from mysql.connector.pooling import PooledMySQLConnection
+
 
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class
@@ -31,7 +34,7 @@ class RedactingFormatter(logging.Formatter):
         return filter_datum(self.fields, self.REDACTION, msg, self.SEPARATOR)
 
 
-def get_db() -> mysql.connector.connection.MySQLConnection:
+def get_db() -> PooledMySQLConnection | MySQLConnectionAbstract:
     """
     :Logic: create a database connection
     :return: a database Connection
