@@ -3,7 +3,7 @@
 import bcrypt
 
 
-def hash_password(password) -> bytes:
+def hash_password(password: str) -> bytes:
     """
     Basic function hash the password
     :param password: Plain-Text Password
