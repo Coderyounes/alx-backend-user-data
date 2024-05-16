@@ -90,10 +90,13 @@ def main():
         3- display data (formatter)
     :return:
     """
-    # TODO: retrieve all database record
-    # TODO: display them using the format
-    # TODO: filter the PII fields using PII Tuple
-    pass
+    logger = get_logger()
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM users;")
+    # TODO: Redaction Logic
+    cursor.close()
+    db.close()
 
 
 if __name__ == '__main__':
