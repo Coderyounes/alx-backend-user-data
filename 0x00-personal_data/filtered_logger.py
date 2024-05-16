@@ -81,3 +81,14 @@ def filter_datum(fields: List[str],
         message = re.sub(f'{field}=(.*?){separator}',
                          f'{field}={redaction}{separator}', message)
     return message
+
+
+def main():
+    # TODO: retrieve all database record
+    # TODO: display them using the format
+    # TODO: filter the PII fields
+    pass
+
+
+if __name__ == '__main__':
+    main()
