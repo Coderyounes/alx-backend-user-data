@@ -31,25 +31,6 @@ class RedactingFormatter(logging.Formatter):
         return filter_datum(self.fields, self.REDACTION, msg, self.SEPARATOR)
 
 
-def get_db() -> mysql.connector.connection.MySQLConnection:
-    """
-    :Logic: create a database connection
-    :return: a database Connection
-    """
-    db_host = os.getenv("PERSONAL_DATA_DB_HOST", "localhost")
-    db_name = os.getenv("PERSONAL_DATA_DB_NAME", "")
-    db_user = os.getenv("PERSONAL_DATA_DB_USERNAME", "root")
-    db_pwd = os.getenv("PERSONAL_DATA_DB_PASSWORD", "")
-    connection = mysql.connector.connect(
-        host=db_host,
-        port=3306,
-        user=db_user,
-        password=db_pwd,
-        database=db_name,
-    )
-    return connection
-
-
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
 
@@ -81,6 +62,24 @@ def filter_datum(fields: List[str],
         message = re.sub(f'{field}=(.*?){separator}',
                          f'{field}={redaction}{separator}', message)
     return message
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """
+    :Logic: create a database connection
+    :return: a database Connection
+    """
+    db_host = os.getenv("PERSONAL_DATA_DB_HOST") or "localhost"
+    db_name = os.getenv("PERSONAL_DATA_DB_NAME") or ""
+    db_user = os.getenv("PERSONAL_DATA_DB_USERNAME") or "root"
+    db_pwd = os.getenv("PERSONAL_DATA_DB_PASSWORD") or ""
+    connection = mysql.connector.connect(
+        host=db_host,
+        user=db_user,
+        password=db_pwd,
+        database=db_name,
+    )
+    return connection
 
 
 def main():
