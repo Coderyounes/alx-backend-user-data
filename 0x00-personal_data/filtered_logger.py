@@ -84,6 +84,13 @@ def filter_datum(fields: List[str],
 
 
 def main():
+    """
+    Core function Perform:
+        1- retrieving data (get_db)
+        2- filtering data (filter_datum)
+        3- display data (formatter)
+    :return:
+    """
     # TODO: retrieve all database record
     # TODO: display them using the format
     # TODO: filter the PII fields using PII Tuple
