@@ -31,15 +31,15 @@ class RedactingFormatter(logging.Formatter):
         return filter_datum(self.fields, self.REDACTION, msg, self.SEPARATOR)
 
 
-def get_db() -> mysql.connector.connection.MySQLConnection:
+def get_db() -> mysql.connector.connection.MYSQLConnection:
     """
-    :Logic: create a database connection
-    :return: a database Connection
+    Create a database Connection
+    :return: db connection
     """
     mydb = mysql.connector.connect(
-        host=os.getenv('PERSONAL_DATA_DB_HOST', 'localhost'),
         user=os.getenv('PERSONAL_DATA_DB_USERNAME', 'root'),
         password=os.getenv('PERSONAL_DATA_DB_PASSWORD', ''),
+        host=os.getenv('PERSONAL_DATA_DB_HOST', 'localhost'),
         database=os.getenv('PERSONAL_DATA_DB_NAME')
     )
     return mydb
