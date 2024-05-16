@@ -86,7 +86,7 @@ def filter_datum(fields: List[str],
 def main():
     # TODO: retrieve all database record
     # TODO: display them using the format
-    # TODO: filter the PII fields
+    # TODO: filter the PII fields using PII Tuple
     pass
 
 
