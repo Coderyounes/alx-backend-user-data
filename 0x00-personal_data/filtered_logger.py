@@ -3,8 +3,8 @@
 from typing import List
 import re
 import logging
-import mysql.connector.connection
-from os import environ
+import mysql.connector
+import os
 
 
 class RedactingFormatter(logging.Formatter):
@@ -36,15 +36,13 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     :Logic: create a database connection
     :return: a database Connection
     """
-    host = environ.get("PERSONAL_DATA_DB_HOST", "localhost")
-    user = environ.get("PERSONAL_DATA_DB_USERNAME", "root")
-    password = environ.get("PERSONAL_DATA_DB_PASSWORD", "")
-    database = environ.get("PERSONAL_DATA_DB_NAME")
-    return mysql.connector.connection.MySQLConnection(
-        user=user,
-        password=password,
-        host=host,
-        database=database
+    username = os.getenv("PERSONAL_DATA_DB_USERNAME", "root")
+    password = os.getenv("PERSONAL_DATA_DB_PASSWORD", "")
+    host = os.getenv("PERSONAL_DATA_DB_HOST", "localhost")
+    db_name = os.getenv("PERSONAL_DATA_DB_NAME")
+
+    return mysql.connector.connect(
+        user=username, password=password, host=host, database=db_name
     )
 
 
