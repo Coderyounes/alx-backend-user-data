@@ -36,14 +36,13 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     :Logic: create a database connection
     :return: a database Connection
     """
-    username = os.getenv("PERSONAL_DATA_DB_USERNAME", "root")
-    password = os.getenv("PERSONAL_DATA_DB_PASSWORD", "")
-    host = os.getenv("PERSONAL_DATA_DB_HOST", "localhost")
-    db_name = os.getenv("PERSONAL_DATA_DB_NAME")
-
-    return mysql.connector.connect(
-        user=username, password=password, host=host, database=db_name
+    mydb = mysql.connector.connect(
+        host=os.getenv('PERSONAL_DATA_DB_HOST', 'localhost'),
+        user=os.getenv('PERSONAL_DATA_DB_USERNAME', 'root'),
+        password=os.getenv('PERSONAL_DATA_DB_PASSWORD', ''),
+        database=os.getenv('PERSONAL_DATA_DB_NAME')
     )
+    return mydb
 
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
