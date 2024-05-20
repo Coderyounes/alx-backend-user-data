@@ -24,8 +24,8 @@ def not_found(error) -> str:
 @app.errorhandler(401)
 def unauthorized(error) -> str:
     """
-    :param error:
-    :return:
+    :param error: take error
+    :return: json string with 401
     """
     return jsonify({"error": "Unauthorized"}), 401
 
