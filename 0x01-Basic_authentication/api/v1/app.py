@@ -45,6 +45,10 @@ def forbidden(error) -> str:
 
 @app.before_request
 def before_request():
+    """
+    function made some checks before any request
+    :return: nothin to return only abort
+    """
     path = request.path
     excluded = ['/api/v1/status/',
                 '/api/v1/unauthorized/',
