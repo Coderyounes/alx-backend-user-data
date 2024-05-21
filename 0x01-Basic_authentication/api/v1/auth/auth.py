@@ -27,11 +27,9 @@ class Auth():
         return True
 
     def authorization_header(self, request=None) -> str:
-        """
-        :param request:
-        :return:
-        """
-        return request
+        if request is None or request.get('Authorization') is None:
+            return None
+        return request.get('Authorization')
 
     def current_user(self, request=None) -> TypeVar('User'):
         """
