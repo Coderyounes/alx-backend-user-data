@@ -58,7 +58,9 @@ class BasicAuth(Auth):
         email, password = decoded_base64_authorization_header.split(':', 1)
         return email, password
 
-    def user_object_from_credentials(self, user_email: str, user_pwd: str) -> TypeVar('User'):
+    def user_object_from_credentials(self,
+                                     user_email: str,
+                                     user_pwd: str) -> TypeVar('User'):
         """
         :param user_email: user email to search
         :param user_pwd: user password to check
@@ -73,4 +75,3 @@ class BasicAuth(Auth):
             return None
         if users[0].is_valid_password(user_pwd):
             return users[0]
-
