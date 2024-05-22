@@ -19,6 +19,9 @@ if auth == 'auth':
 if auth == 'basic_auth':
     from api.v1.auth.basic_auth import BasicAuth
     auth = BasicAuth()
+if auth == 'session_auth':
+    from api.v1.auth.session_auth import SessionAuth
+    auth = SessionAuth()
 
 
 @app.errorhandler(404)
@@ -50,7 +53,7 @@ def forbidden(error) -> str:
 def before_request():
     """
     function made some checks before any request
-    :return: nothin to return only abort
+    :return: nothing to return only abort
     """
     path = request.path
     excluded = ['/api/v1/status/',
