@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """ Auth Class With Different Methods """
+import os
+from http.cookies import SimpleCookie
+
 from flask import request
 from typing import List, TypeVar
 
@@ -41,3 +44,16 @@ class Auth():
         :return:
         """
         return None
+
+    def session_cookie(self, request=None):
+        """
+        request: Flask-request
+        return None or cookie parameter value
+        """
+        if request is None:
+            return None
+        if os.getenv('SESSION_NAME'):
+            cookie = request.headers.get('Cookie')
+            if cookie:
+                _, value = cookie.split('=')
+                return value
