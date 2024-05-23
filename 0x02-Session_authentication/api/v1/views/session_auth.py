@@ -1,19 +1,32 @@
 #!/usr/bin/env python3
 """ Handle all Session Auth routes """
+import os
+
 from flask import jsonify, abort, request
 from api.v1.views import app_views
+from models.user import User
 
 
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
-def session_rt(request=None):
-    # TODO: retrieve email & password from request
-    # TODO:(sub) check if one of them is missing or empty return 400 & JSON string
-    # TODO: retrieve User instance based on email ( use search method)
-    # TODO:(sub) if no User found return 404 & json string
-    # TODO:(sub) if password not correct return 401 & json String (use the is_valid_password method)
-    # TODO: create a Session ID from the User instance (must import Auth class)
-    #  WARNING: WATCH out circular import issue
-    # TODO: use create_session method to create session id
-    # TODO: return a dict representation of the User instance ( use to_json() )
-    # TODO: set the cookie to response
-    pass
+def session_rt():
+    """
+    route handle the Login Process
+    setup the session
+    """
+    ENV = os.getenv('SESSION_NAME')
+    email, pwd = request.form.get('email'), request.form.get('password')
+    if email == "" or not email:
+        return jsonify({'error': 'email missing'}), 400
+    if pwd == "" or not pwd:
+        return jsonify({'error': 'password missing'}), 400
+    users = User.search({'email': email})
+    if not users:
+        return jsonify({"error": "no user found for this email"}), 404
+    for user in users:
+        if user.is_valid_password(pwd):
+            from api.v1.app import auth
+            session = auth.create_session(user.id)
+            res = jsonify(user.to_json())
+            res.set_cookie(ENV, session)
+            return res
+    return jsonify({"error": "wrong password"}), 401
