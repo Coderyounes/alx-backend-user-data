@@ -2,6 +2,7 @@
 """ Documentation: Class & method to encapsulate all session_auth """
 import uuid
 from api.v1.auth.auth import Auth
+from models.user import User
 
 
 class SessionAuth(Auth):
@@ -31,3 +32,13 @@ class SessionAuth(Auth):
             return None
         value = self.user_id_by_session_id.get(session_id)
         return value
+
+    def current_user(self, request=None):
+        """
+        request: request to extract information
+        return: user instance
+        """
+        session = self.session_cookie(request)
+        userid = self.user_id_for_session_id(session)
+        user = User.get(userid)
+        return user
