@@ -32,12 +32,13 @@ def session_rt():
     return jsonify({"error": "wrong password"}), 401
 
 
-@app_views.route('auth_session/logout', methods=['DELETE'], strict_slashes=False)
+@app_views.route('auth_session/logout',
+                 methods=['DELETE'], strict_slashes=False)
 def destroy():
     """
     call the session destroy method
     """
     from api.v1.app import auth
-    if auth.destroy_session(request) == False:
+    if not auth.destroy_session(request):
         abort(404)
     return jsonify({}), 200
