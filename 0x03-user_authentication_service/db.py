@@ -30,7 +30,14 @@ class DB:
             self.__session = DBSession()
         return self.__session
 
-    def add_user(self, email: str, hashed_password: str):
+    def add_user(self, email: str, hashed_password: str) -> User:
+        """
+        add_user: method to add new user to database without any Checks or
+        validations
+        :param email: email String entries
+        :param hashed_password: Password Hashed String
+        :return: User Object
+        """
         new_user = User(email=email, hashed_password=hashed_password)
         session = self._session
         session.add(new_user)
