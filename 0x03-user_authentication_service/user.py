@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" Code define user model using ORM"""
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String
 
