@@ -61,3 +61,9 @@ class DB:
         if user is None:
             raise NoResultFound
         return user
+
+    def update_user(self, **kwargs):
+        # TODO: Check if the kwargs contain user_id & other word
+        # TODO: use find_user_by method to fetch the existing user row
+        # TODO:
+        pass
