@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
-
+from sqlalchemy.orm.exc import NoResultFound
 from user import Base, User
 
 
@@ -44,3 +44,12 @@ class DB:
         session.commit()
         session.refresh(new_user)
         return new_user
+
+    def find_user_by(self, word: any) -> User:
+        # TODO: Make a search using that word
+        # TODO: if the no data exist raise noResultFound
+        # TODO: if the columns name wrong raise invalid request Error
+        # TODO: find a way to get Columns Names to Compare them, or define a list with columns names
+        # TODO: Search on how to trigger the Exception from function in main
+        # TODO: return the first appearance of user
+        pass
