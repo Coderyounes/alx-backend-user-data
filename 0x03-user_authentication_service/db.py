@@ -38,11 +38,10 @@ class DB:
         :param hashed_password: Password Hashed String
         :return: User Object
         """
-        new_user = User(email=email, hashed_password=hashed_password)
-        session = self._session
-        session.add(new_user)
-        session.commit()
-        return new_user
+        user = User(email=email, hashed_password=hashed_password)
+        self._session.add(user)
+        self._session.commit()
+        return user
 
     def find_user_by(self, word: any) -> User:
         # TODO: Make a search using that word
