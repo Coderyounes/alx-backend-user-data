@@ -62,8 +62,8 @@ class DB:
             raise NoResultFound
         return user
 
-    def update_user(self, **kwargs):
-        # TODO: Check if the kwargs contain user_id & other word
+    def update_user(self, userid: int, **kwargs):
+        # TODO: Check if the kwargs contain user.id & other word
         # TODO: use find_user_by method to fetch the existing user row
-        # TODO:
+        # TODO: if their an issue raise ValueError
         pass
