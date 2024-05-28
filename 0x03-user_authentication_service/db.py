@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """DB module
 """
 from sqlalchemy import create_engine
@@ -49,7 +49,8 @@ class DB:
         # TODO: Make a search using that word
         # TODO: if the no data exist raise noResultFound
         # TODO: if the columns name wrong raise invalid request Error
-        # TODO: find a way to get Columns Names to Compare them, or define a list with columns names
+        # TODO: find a way to get Columns Names to Compare them,
+        #  or define a list with columns names
         # TODO: Search on how to trigger the Exception from function in main
         # TODO: return the first appearance of user
         pass
