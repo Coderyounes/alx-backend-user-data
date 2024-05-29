@@ -62,8 +62,20 @@ class DB:
             raise NoResultFound
         return user
 
-    def update_user(self, userid: int, **kwargs):
-        # TODO: Check if the kwargs contain user.id & other word
-        # TODO: use find_user_by method to fetch the existing user row
-        # TODO: if their an issue raise ValueError
-        pass
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """
+        :param user_id: id of the user to update
+        :param kwargs: key/value pairs of attributes to update
+        :return: None
+        """
+        user = self.find_user_by(id=user_id)
+        if user is None:
+            raise ValueError
+
+        for key, value in kwargs.items():
+            if hasattr(user, key):
+                setattr(user, key, value)
+            else:
+                raise ValueError
+
+        self._session.commit()
