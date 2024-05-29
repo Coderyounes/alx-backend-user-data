@@ -2,7 +2,7 @@
 """ function to hash passwords """
 import bcrypt
 from bcrypt import hashpw
-from sqlalchemy.exc import NoResultFound
+from sqlalchemy.orm.exc import NoResultFound
 from db import DB
 from user import User
 
