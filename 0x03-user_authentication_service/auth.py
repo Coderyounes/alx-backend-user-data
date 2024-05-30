@@ -39,6 +39,12 @@ class Auth:
         raise ValueError(f"User {email} already exists")
 
     def valid_login(self, email: str, password: str) -> bool:
+        """
+        method to validate users credentials
+        :param email: email string
+        :param password: password plain-text
+        :return: boolean
+        """
         try:
             user = self._db.find_user_by(email=email)
             if user is not None:
