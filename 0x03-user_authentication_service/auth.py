@@ -87,3 +87,13 @@ class Auth:
             return db.find_user_by(session_id=session_id)
         except NoResultFound:
             return None
+
+    def destroy_session(self, user_id: int) -> None:
+        """
+        function update the session_id for a user to None
+        :param user_id: userid integer
+        :return: None
+        """
+        db = self._db
+        db.update_user(user_id=user_id, session_id=None)
+        return None
