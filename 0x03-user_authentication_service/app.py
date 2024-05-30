@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """ Basic Flask App """
 from flask import Flask, jsonify, request, abort, make_response, redirect
+from sqlalchemy.orm.exc import NoResultFound
+
 from auth import Auth
 
 app = Flask(__name__)
@@ -56,6 +58,19 @@ def logout():
         abort(403)
     AUTH.destroy_session(user.id)
     return redirect('/')
+
+
+@app.route('/profile', methods=['GET'])
+def profile():
+    """
+    Endpoint get user profile by session_id
+    :return: user email or 403
+    """
+    session = request.cookies.get("session_id")
+    user = AUTH.get_user_from_session_id(session)
+    if user:
+        return jsonify({"email": f"{user.email}"}), 200
+    abort(403)
 
 
 if __name__ == "__main__":
