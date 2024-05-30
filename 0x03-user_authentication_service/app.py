@@ -98,9 +98,9 @@ def update_password():
     token = request.form.get('reset_token')
     try:
         AUTH.update_password(token, password)
-        return jsonify({"email": f"{e}", "message": "Password updated"}), 200
     except ValueError:
         abort(403)
+    return jsonify({"email": f"{e}", "message": "Password updated"}), 200
 
 
 if __name__ == "__main__":
