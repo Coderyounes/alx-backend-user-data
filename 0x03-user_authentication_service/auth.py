@@ -115,7 +115,7 @@ class Auth:
 
     def update_password(self, reset_token: str, password: str) -> None:
         """
-        update password method
+        method that update the password for users
         :param reset_token: string uuid token
         :param password: new Password
         :return: Nothing to return

@@ -90,7 +90,8 @@ def get_reset_password_token():
 @app.route('/reset_password', methods=['PUT'])
 def update_password():
     """
-    endpoint call update_password method
+    This function is an endpoint in a Flask application
+    that is used to update a user's password
     :return: json string or 403
     """
     e = request.form.get('email')
