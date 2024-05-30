@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """ function to hash passwords """
+from typing import Union
 import bcrypt
 from bcrypt import hashpw, checkpw
 from sqlalchemy.orm.exc import NoResultFound
@@ -74,17 +75,15 @@ class Auth:
             return None
         return None
 
-    def get_user_from_session_id(self, session_id: str) -> User | None:
+    def get_user_from_session_id(self, session_id: str) -> Union[User, None]:
         """
         :param session_id: session_id string
         :return: user object or None
         """
-        user = None
         db = self._db
         if session_id is None:
             return None
         try:
-            user = db.find_user_by(session_id=session_id)
+            return db.find_user_by(session_id=session_id)
         except NoResultFound:
             return None
-        return user
