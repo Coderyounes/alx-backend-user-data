@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """ function to hash passwords """
-from uuid import uuid4
 import bcrypt
 from bcrypt import hashpw, checkpw
 from sqlalchemy.orm.exc import NoResultFound
 from db import DB
 from user import User
+import uuid
 
 
 def _hash_password(password: str) -> bytes:
@@ -23,7 +23,7 @@ def _generate_uuid(self) -> str:
     method generate a uuid
     :return: uuid string
     """
-    return str(uuid4())
+    return str(uuid.uuid4())
 
 
 class Auth:
