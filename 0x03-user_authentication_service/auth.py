@@ -3,7 +3,6 @@
 import bcrypt
 from bcrypt import hashpw, checkpw
 from sqlalchemy.orm.exc import NoResultFound
-from sqlalchemy.exc import InvalidRequestError
 from db import DB
 from user import User
 from uuid import uuid4
@@ -84,5 +83,5 @@ class Auth:
         try:
             user = db.find_user_by(session_id=session_id)
             return user
-        except (NoResultFound, InvalidRequestError):
+        except NoResultFound:
             return None
