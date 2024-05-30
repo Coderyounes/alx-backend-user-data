@@ -8,6 +8,25 @@ EMAIL = "guillaume@holberton.io"
 PASSWD = "b4l0u"
 NEW_PASSWD = "t4rt1fl3tt3"
 
+base = 'http://localhost:5000'
+paths = ['/users', '/sessions', '/profile', 'reset_password']
+
+
+def register_user(email, pwd):
+    url = base + paths[0]
+    data = {"email": email, "password": pwd}
+    res = requests.get(url, data)
+    assert res.status_code == 200
+    assert res.json() == {"email": f"{email}", "message": "user created"}
+
+# TODO: implement login in with wrong password
+# TODO: implement non login hit to profile
+# TODO: implement login & store the session id for further Tests
+# TODO: implement profile logged using session_id
+# TODO: implement logout  via session id
+# TODO: implement reset token request via email & store the reset_token for further tests
+# TODO: implement update_password using reset_token
+# TODO: implement new Login with the new password
 
 if __name__ == "__main__":
 
