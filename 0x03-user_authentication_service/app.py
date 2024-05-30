@@ -4,7 +4,7 @@ from flask import Flask, jsonify, request, abort, make_response
 from auth import Auth
 
 app = Flask(__name__)
-auth = Auth()
+AUTH = Auth()
 
 
 @app.route("/", methods=['GET'])
@@ -21,7 +21,7 @@ def users():
     email = request.form.get('email')
     pwd = request.form.get('password')
     try:
-        auth.register_user(email, pwd)
+        AUTH.register_user(email, pwd)
         return jsonify({"email": f"{email}", "message": "user created"})
     except ValueError:
         return jsonify({"message": "email already registered"}), 400
@@ -35,10 +35,10 @@ def login():
     """
     email = request.form.get('email')
     pwd = request.form.get('password')
-    status = auth.valid_login(email, pwd)
+    status = AUTH.valid_login(email, pwd)
     if not status:
         abort(401)
-    session = auth.create_session(email)
+    session = AUTH.create_session(email)
     response = make_response(jsonify({"email": f"{email}",
                                       "message": "logged in"}))
     response.set_cookie('session_id', session)
