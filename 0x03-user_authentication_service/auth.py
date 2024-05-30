@@ -2,6 +2,7 @@
 """ function to hash passwords """
 import bcrypt
 from bcrypt import hashpw, checkpw
+from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
 from db import DB
 from user import User
@@ -73,3 +74,15 @@ class Auth:
         except (NoResultFound, ValueError):
             return None
         return None
+
+    def get_user_from_session_id(self, session_id: str) -> User | None:
+        """
+        :param session_id: session_id string
+        :return: user object or None
+        """
+        db = self._db
+        try:
+            user = db.find_user_by(session_id=session_id)
+            return user
+        except (NoResultFound, InvalidRequestError):
+            return None
