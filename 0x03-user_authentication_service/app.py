@@ -11,6 +11,10 @@ AUTH = Auth()
 
 @app.route("/", methods=['GET'])
 def index():
+    """
+    Welcome function , basic flask function
+    :return: jsn string to welcome visitors
+    """
     return jsonify({"message": "Bienvenue"})
 
 
