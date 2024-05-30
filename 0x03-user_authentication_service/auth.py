@@ -112,3 +112,18 @@ class Auth:
         token = _generate_uuid()
         db.update_user(user.id, reset_token=token)
         return token
+
+    def update_password(self, reset_token: str, password: str) -> None:
+        """
+        update password method
+        :param reset_token: string uuid token
+        :param password: new Password
+        :return: Nothing to return
+        """
+        db = self._db
+        try:
+            user = db.find_user_by(reset_token=reset_token)
+        except NoResultFound:
+            raise ValueError
+        hashed = _hash_password(password)
+        db.update_user(user.id, hashed_password=hashed, reset_token=None)
