@@ -8,25 +8,74 @@ EMAIL = "guillaume@holberton.io"
 PASSWD = "b4l0u"
 NEW_PASSWD = "t4rt1fl3tt3"
 
-base = 'http://localhost:5000'
-paths = ['/users', '/sessions', '/profile', 'reset_password']
+base = 'http://localhost:5000/'
+paths = ['users', 'sessions', 'profile', 'reset_password']
 
 
 def register_user(email, pwd):
     url = base + paths[0]
     data = {"email": email, "password": pwd}
-    res = requests.get(url, data)
+    res = requests.post(url, data)
     assert res.status_code == 200
     assert res.json() == {"email": f"{email}", "message": "user created"}
 
-# TODO: implement login in with wrong password
-# TODO: implement non login hit to profile
-# TODO: implement login & store the session id for further Tests
-# TODO: implement profile logged using session_id
-# TODO: implement logout  via session id
-# TODO: implement reset token request via email & store the reset_token for further tests
-# TODO: implement update_password using reset_token
-# TODO: implement new Login with the new password
+
+def log_in_wrong_password(email, pwd):
+    url = base + paths[0]
+    data = {"email": email, "password": pwd}
+    res = requests.post(url, data)
+    assert res.status_code == 400
+
+
+def profile_unlogged():
+    url = base + paths[2]
+    res = requests.get(url)
+    assert res.status_code == 403
+
+
+def log_in(email, pwd):
+    url = base + paths[1]
+    data = {"email": email, "password": pwd}
+    res = requests.post(url, data)
+    assert res.status_code == 200
+    assert res.json() == {"email": f"{email}", "message": "logged in"}
+    return res.cookies.get('session_id')
+
+
+def profile_logged(session_id):
+    url = base + paths[2]
+    data = {"session_id": session_id}
+    res = requests.get(url, cookies=data)
+    assert res.status_code == 200
+    assert res.json() == {"email": EMAIL}
+
+
+def log_out(session_id):
+    url = base + paths[1]
+    res = requests.delete(url, cookies={"session_id": session_id})
+    assert res.status_code == 200
+    assert res.json() == {"message": "Bienvenue"}
+
+
+def reset_password_token(email):
+    url = base + paths[3]
+    data = {"email": email}
+    res = requests.post(url, data)
+    assert res.status_code == 200
+    return res.json().get("reset_token")
+
+
+def update_password(email, token, new_passwd):
+    url = base + paths[3]
+    data = {
+        "email": email,
+        "reset_token": token,
+        "new_password": new_passwd
+    }
+    res = requests.put(url, data)
+    assert res.status_code == 200
+    assert res.json() == {"email": email, "message": "Password updated"}
+
 
 if __name__ == "__main__":
 
